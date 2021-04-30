@@ -3,9 +3,9 @@ local server_table = {}
 
 uci:foreach("shadowsocksr", "servers", function(s)
 	if s.alias then
-		server_table[s[".name"]] = "[%s]:%s" % {string.upper(s.type), s.alias}
+		server_table[s[".name"]] = "[%s]:%s" % {string.upper(s.v2ray_protocol or s.type), s.alias}
 	elseif s.server and s.server_port then
-		server_table[s[".name"]] = "[%s]:%s:%s" % {string.upper(s.type), s.server, s.server_port}
+		server_table[s[".name"]] = "[%s]:%s:%s" % {string.upper(s.v2ray_protocol or s.type), s.server, s.server_port}
 	end
 end)
 
@@ -51,7 +51,7 @@ o = s:option(Value, "adblock_url", translate("adblock_url"))
 o:value("https://ghproxy.com/https://raw.githubusercontent.com/neodevpro/neodevhost/master/lite_host_dnsmasq.conf", translate("NEO DEV HOST Lite"))
 o:value("https://ghproxy.com/https://raw.githubusercontent.com/neodevpro/neodevhost/master/host_dnsmasq.conf", translate("NEO DEV HOST Full"))
 o:value("https://ghproxy.com/https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/adblock-for-dnsmasq.conf", translate("anti-AD"))
-o.default = "https://ghproxy.com/https://raw.githubusercontent.com/neodevpro/neodevhost/master/lite_host_dnsmasq.conf"
+o.default = "https://ghproxy.com/https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/adblock-for-dnsmasq.conf"
 o:depends("adblock", "1")
 o.description = translate("Support AdGuardHome and DNSMASQ format list")
 
