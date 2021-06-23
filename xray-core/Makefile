@@ -8,7 +8,7 @@ PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/XTLS/xray-core/tar.gz/v$(PKG_VERSION)?
 PKG_HASH:=565255d8c67b254f403d498b9152fa7bc097d649c50cb318d278c2be644e92cc
 
-PKG_MAINTAINER:=Tianling Shen <cnsztl@project-openwrt.eu.org>
+PKG_MAINTAINER:=Tianling Shen <cnsztl@immortalwrt.org>
 PKG_LICENSE:=MPL-2.0
 PKG_LICENSE_FILES:=LICENSE
 
@@ -41,7 +41,6 @@ endef
 define Package/xray-core
   $(call Package/xray/template)
   DEPENDS:=$(GO_ARCH_DEPENDS) +ca-bundle
-  PROVIDES:=v2ray-core
 endef
 
 define Package/xray-geodata
@@ -51,7 +50,7 @@ define Package/xray-geodata
 endef
 
 define Package/xray/description
-  Xray, Penetrates Everything. Also the best v2ray-core, with XTLS support. Fully compatible configuration.
+  Xray, Penetrates Everything. It helps you to build your own computer network.
   It secures your network connections and thus protects your privacy.
 endef
 
@@ -79,24 +78,24 @@ config XRAY_CORE_COMPRESS_UPX
 endmenu
 endef
 
-GEOIP_VER:=202103250007
+GEOIP_VER:=202106030115
 GEOIP_FILE:=geoip.dat.$(GEOIP_VER)
 
 define Download/geoip
   URL:=https://github.com/v2fly/geoip/releases/download/$(GEOIP_VER)/
   URL_FILE:=geoip.dat
   FILE:=$(GEOIP_FILE)
-  HASH:=eca0b25e528167dbdec6c130b6a5240284ce20b28158d1448f8dbeddace2e8cf
+  HASH:=acf231d7c6461d088ae479fe0c1cb143b5ee3cf7048a897c5a9b7807ab7005df
 endef
 
-GEOSITE_VER:=20210331082244
+GEOSITE_VER:=20210531212831
 GEOSITE_FILE:=dlc.dat.$(GEOSITE_VER)
 
 define Download/geosite
   URL:=https://github.com/v2fly/domain-list-community/releases/download/$(GEOSITE_VER)/
   URL_FILE:=dlc.dat
   FILE:=$(GEOSITE_FILE)
-  HASH:=e2b942b93994af1a59fd0c39179eeac7afaf351f48bf863f3e779b46a7530823
+  HASH:=332bbe53af49582dbf89bda04ee5e60e474f9293fc368ab55b517fdcd4a78ed2
 endef
 
 ifneq ($(CONFIG_XRAY_CORE_COMPRESS_GOPROXY),)
@@ -123,7 +122,6 @@ define Package/xray-core/install
 	$(call GoPackage/Package/Install/Bin,$(PKG_INSTALL_DIR))
 	$(INSTALL_DIR) $(1)/usr/bin/
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/main $(1)/usr/bin/xray
-	$(LN) xray $(1)/usr/bin/v2ray
 endef
 
 define Package/xray-geodata/install
